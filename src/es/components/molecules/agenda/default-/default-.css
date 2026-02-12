@@ -1,0 +1,17 @@
+:host {
+    --any-display: flex;
+    --agenda-default-background-color-custom: var(--color-quarternary);
+    --agenda-default-bold-text-color-custom: var(--color-tertiary, black);
+    --button-primary-padding: var(--button-primary-padding-custom, 0.75rem 1.5rem);
+    --agenda-default-h3-color: var(--color-tertiary, black);
+    --agenda-default-h3-font-size: var(--h2-font-size, 1.7rem);
+}
+
+:host a-picture {
+    --picture-cover-border-radius:  1rem;
+    --picture-cover-border-radius-mobile:  1rem;
+    --picture-cover-img-max-height-mobile: none;
+    --picture-cover-img-max-height: 30vw;
+    --picture-cover-aspect-ratio: 2/1;
+    --picture-cover-img-object-position: center;
+}
