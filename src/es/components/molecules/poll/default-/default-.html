@@ -1,1 +1,65 @@
-<h1>Hallo Welt</h1>
+<engagement-m-poll data-post-destination="/umbraco/api/PollDummyApi/PostResultDummy"
+    data-question-id="233232">
+    <div class="poll-heading">
+        <!-- 1. Metadata -->
+        <h2 class="poll-question">Poll Module</h2>
+        <p class="poll-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+            duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+        </p>
+    </div>
+    <!-- 2. Form Poll Choice View -->
+    <form>
+        <ul class="poll-answers">
+            <li class="poll-answer">
+                <input type="radio" name="question3" data-answer-id="1">
+                <label for="question1">Ich weiss es nicht. Darüber habe ich mir zu wenig Gedanken gemacht.</label>
+            </li>
+            <li class="poll-answer">
+                <input type="radio" name="question3" data-answer-id="2">
+                <label for="question2">Nein, Armut kann jede und jeden treffen. Nicht immer gibt es eine Lösung.</label>
+
+            </li>
+            <li class="poll-answer">
+                <input type="radio" name="question3" data-answer-id="3">
+                <label for="question3">Ja, viele armutsbetroffene Menschen wollen nicht arbeiten. Wer will, der findet
+                    einen Weg. der findet einen Weg. der findet einen Weg.</label>
+            </li>
+        </ul>
+        <input class="poll-submit" type="submit" value="Antworten">
+        <p class="poll-error-message" hidden>Bitte Antwort auswählen</p>
+    </form>
+
+    <!-- 3. Results View -->
+    <div class="poll-answers results">
+        <div class="poll-answer result" data-answer-id="1">
+            <div class="poll-answer-text">
+                Ich weiss es nicht. Darüber habe ich mir zu wenig Gedanken gemacht.
+            </div>
+            <div class="poll-result-percentage"></div>
+            <div class="poll-progress-bar"></div>
+        </div>
+        <div class="poll-answer result" data-answer-id="2">
+            <div class="poll-answer-text">
+                Nein, Armut kann jede und jeden treffen. Nicht immer gibt es eine Lösung.
+            </div>
+            <div class="poll-result-percentage"></div>
+            <div class="poll-progress-bar"></div>
+        </div>
+        <div class="poll-answer result" data-answer-id="3">
+            <div class="poll-answer-text">
+                Ja, viele armutsbetroffene Menschen wollen nicht arbeiten. Wer will, der findet einen Weg. der findet einen Weg. der findet einen Weg.
+            </div>
+            <div class="poll-result-percentage"></div>
+            <div class="poll-progress-bar"></div>
+        </div>
+        <p><span class="poll-result-attenders"></span> Teilnehmer</p>
+    </div>
+    <!-- Loader for Transition (Toolbox Component) -->
+    <div class="poll-answer-loader" hidden=true>
+        <section class="loading">
+            <div></div>
+            <div></div>
+        </section>
+    </div>
+</engagement-m-poll>

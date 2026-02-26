@@ -218,6 +218,11 @@
       selector: 'gastro-m-',
       url: 'molecules/',
       separateFolder: true
+    },
+    {
+      selector: 'engagement-m-',
+      url: 'molecules/',
+      separateFolder: true
     }
   ] // directories
   // ↑↑↑ adjustable ↑↑↑
