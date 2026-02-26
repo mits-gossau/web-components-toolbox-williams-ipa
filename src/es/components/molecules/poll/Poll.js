@@ -10,7 +10,8 @@ export default class Poll extends Shadow() {
         if (this.shouldRenderCSS()) this.renderCSS()
         //Allow click through parent
         this.inputLists.forEach(element => this.addParentClickListener(element));
-
+        //Catch on Submit of Form
+        this.form.addEventListener("submit", (event) => this.submitAnswer(event))
         // Add a listener for each Button to highlight
         this.inputLists.forEach(input => {
             input.addEventListener("change", () => {
@@ -18,15 +19,83 @@ export default class Poll extends Shadow() {
                 this.updateHighlightAnswer(input.closest(".poll-answer"));
             });
         });
+    }
 
+    async submitAnswer(event) {
+        event.preventDefault();
+        this.ErrorMessage.setAttribute("hidden", true);
+        if (this.checkedAnswer) {
+            const answerId = this.checkedAnswer.dataset.answerId;
+            this.selectedAnswer = answerId;
+            var answerData = { "pollId": this.pollId, "answerId": answerId }
+            this.fetchEndpoint(answerData)
+        }
+        else {
+            this.ErrorMessage.removeAttribute("hidden");
+        }
+    }
+
+    async fetchEndpoint(data) {
+        try {
+            this.hideForm()
+            const response = await fetch(this.postDestination, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { "Content-Type": "application/json" },
+            });
+            if (!response.ok) throw new Error("Network response was not ok");
+            const responseData = await response.json();
+            this.showResult(responseData);
+        } catch (error) {
+            this.ErrorMessage.removeAttribute("hidden");
+            this.ErrorMessage.innerText = "There was an error submitting your answer, please try again later."
+            console.error("There was a problem with the fetch operation for PollID:", this.pollId, error);
+        }
+    }
+
+    hideForm() {
+        this.form.classList.add("disappearing");
+        this.pollAnswerLoader.style.display = "flex";
+    }
+
+    showResult(data) {
+        this.pollAnswerLoader.style.display = "none";
+        this.pollResults.style.display = "flex";
+        this.pollAttenders.innerText = data.totalVotes;
+        this.fillProgressBars(data.answers);
+
+        // Highlight the selected answer in results
+        if (this.selectedAnswer) {
+            const resultElement = this.root.querySelector(`.result[data-answer-id="${this.selectedAnswer}"]`);
+            this.updateHighlightAnswer(resultElement)
+        }
+    }
+
+    fillProgressBars(results) {
+        results.forEach(result => {
+            if (result.answerId != null && result.percentage != null) {
+                const percentage = result.percentage > 0 ? Math.round(result.percentage * 100) : "0";
+                const parent = this.root.querySelector(`.result[data-answer-id="${result.answerId}"]`);
+                if (!parent) return;
+                const bar = parent.querySelector(".poll-progress-bar");
+                const percentageResult = parent.querySelector(".poll-result-percentage");
+                if (!bar || !percentageResult) return;
+                bar.style.width = "0%";
+                percentageResult.textContent = percentage + "%";
+                requestAnimationFrame(() => {
+                    bar.style.width = percentage + "%";
+                });
+            }
+        });
     }
 
     addParentClickListener(element) {
         element.addEventListener("click", () => {
-            element.querySelector("input").click();
+            const input = element.querySelector("input");
+            if (input) input.click();
         });
     }
-    
+
     updateHighlightAnswer(answer) {
         this.inputLists.forEach(answer => answer.classList.remove("highlight"));
         if (answer) {
@@ -187,6 +256,11 @@ export default class Poll extends Shadow() {
             opacity: 1;
         }  
         
+        .poll-answer-text{
+            position: static;
+            z-index: 2;
+        }
+        
         .disappearing {
             opacity: 0;
             display: none;
@@ -278,6 +352,41 @@ export default class Poll extends Shadow() {
 
     get inputLists() {
         return this.root.querySelectorAll('.poll-answer')
+    }
+
+    get submitButton() {
+        return this.root.querySelector(".poll-submit")
+    }
+
+    get form() {
+        return this.root.querySelector("form")
+    }
+
+    get postDestination() {
+        return this.dataset.postDestination
+    }
+
+    get checkedAnswer() {
+        return this.root.querySelector(".poll-answer > input[type='radio']:checked")
+    }
+
+    get ErrorMessage() {
+        return this.root.querySelector(".poll-error-message")
+    }
+
+    get pollId() {
+        return this.dataset.pollId
+    }
+
+    get pollAnswerLoader() {
+        return this.root.querySelector(".poll-answer-loader")
+    }
+
+    get pollResults() {
+        return this.root.querySelector(".results")
+    }
+    get pollAttenders() {
+        return this.root.querySelector(".poll-result-attenders")
     }
 
 }

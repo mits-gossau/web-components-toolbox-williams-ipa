@@ -1,9 +1,10 @@
-<engagement-m-poll namespace="poll-default-" data-post-destination="/umbraco/api/PollDummyApi/PostResultDummy"
+<engagement-m-poll namespace="poll-default-" data-post-destination="http://localhost:3000/api/dummyData"
     data-question-id="233232">
     <div class="poll-heading">
-    <!-- 1. Metadata -->
+        <!-- 1. Metadata -->
         <h2 class="poll-title">Umfrage: Wie denkst du darüber?</h2>
-        <p class="poll-description">Dies ist eine häufig geäusserte Meinung zu armutsbetroffenen oder -gefährdeten Menschen.</p>
+        <p class="poll-description">Dies ist eine häufig geäusserte Meinung zu armutsbetroffenen oder -gefährdeten
+            Menschen.</p>
         <h3 class="poll-question">Ist man deshalb selbst verschuldet?</h3>
     </div>
     <!-- 2. Form Poll Choice View -->
@@ -25,7 +26,6 @@
             </li>
         </ul>
         <input class="poll-submit" type="submit" value="Antworten">
-        <p class="poll-error-message" hidden>Bitte Antwort auswählen</p>
     </form>
 
     <!-- 3. Results View -->
@@ -46,7 +46,8 @@
         </div>
         <div class="poll-answer result" data-answer-id="3">
             <div class="poll-answer-text">
-                Ja, viele armutsbetroffene Menschen wollen nicht arbeiten. Wer will, der findet einen Weg. der findet einen Weg. der findet einen Weg.
+                Ja, viele armutsbetroffene Menschen wollen nicht arbeiten. Wer will, der findet einen Weg. der findet
+                einen Weg. der findet einen Weg.
             </div>
             <div class="poll-result-percentage"></div>
             <div class="poll-progress-bar"></div>
@@ -60,4 +61,6 @@
             <div></div>
         </section>
     </div>
+    <p class="poll-error-message" hidden>Bitte Antwort auswählen</p>
+
 </engagement-m-poll>
