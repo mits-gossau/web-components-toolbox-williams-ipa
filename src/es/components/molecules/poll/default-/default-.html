@@ -1,12 +1,10 @@
-<engagement-m-poll data-post-destination="/umbraco/api/PollDummyApi/PostResultDummy"
+<engagement-m-poll namespace="poll-default-" data-post-destination="/umbraco/api/PollDummyApi/PostResultDummy"
     data-question-id="233232">
     <div class="poll-heading">
-        <!-- 1. Metadata -->
-        <h2 class="poll-question">Poll Module</h2>
-        <p class="poll-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-            duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-        </p>
+    <!-- 1. Metadata -->
+        <h2 class="poll-title">Umfrage: Wie denkst du darüber?</h2>
+        <p class="poll-description">Dies ist eine häufig geäusserte Meinung zu armutsbetroffenen oder -gefährdeten Menschen.</p>
+        <h3 class="poll-question">Ist man deshalb selbst verschuldet?</h3>
     </div>
     <!-- 2. Form Poll Choice View -->
     <form>
@@ -23,7 +21,7 @@
             <li class="poll-answer">
                 <input type="radio" name="question3" data-answer-id="3">
                 <label for="question3">Ja, viele armutsbetroffene Menschen wollen nicht arbeiten. Wer will, der findet
-                    einen Weg. der findet einen Weg. der findet einen Weg.</label>
+                    einen Weg.</label>
             </li>
         </ul>
         <input class="poll-submit" type="submit" value="Antworten">

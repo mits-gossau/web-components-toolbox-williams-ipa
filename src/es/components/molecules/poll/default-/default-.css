@@ -1,0 +1,15 @@
+:host{
+    --poll-default-submit-background-color: var(--poll-submit-background-color-custom, var(--color-tertiary, #9B2700));
+    --poll-default-submit-border-color: var(--poll-submit-border-color-custom, var(--color-tertiary, #9B2700));
+    --poll-default-submit-border-radius: var(--poll-submit-border-radius-custom, 3rem);
+    --poll-default-submit-font-size: var(--poll-submit-font-size-custom, 1rem);
+    --poll-default-ul-display: var(--poll-ul-display-custom, flex);
+    --poll-default-ul-padding-left: var(--poll-ul-padding-left-custom, 0rem);
+    --poll-default-answers-padding: var(--poll-default-answers-padding-custom, 0rem);
+    --poll-default-answers-gap: var(--poll-default-answers-gap-custom, 1rem);
+    --poll-default-ul-li-padding-left: var(--poll-default-ul-li-padding-left-custom, 1rem);
+    --poll-default-h2-margin: var(--poll-h2-margin-custom, 0rem);
+    --poll-default-h3-margin: var(--poll-h3-margin-custom, 0rem);
+    --poll-default-h2-font-size: var(--poll-h2-font-size-custom, 2rem);
+    --poll-default-h3-font-size: var(--poll-h3-font-size-custom, 1.5rem);
+}
