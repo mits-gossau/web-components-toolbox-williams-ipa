@@ -55,6 +55,12 @@
   --color-disabled: #864142;
   --color-gastro-custom-hover: #E03C00;
 
+  /* Poll */
+  --poll-default-answer-background-color-custom: #f5f5f5;
+  --poll-default-highlighted-color-custom: #DDDDDD;
+  --poll-default-submit-background-color-custom: #c4390a;
+  --poll-default-percentage-bar-background-color-custom: #f2b700;
+
   /* Fonts */
   --font-family: HelveticaNowDisplay, Helvetica, Arial, sans-serif;
   --p-font-family: HelveticaNowText, Helvetica, Arial, sans-serif;

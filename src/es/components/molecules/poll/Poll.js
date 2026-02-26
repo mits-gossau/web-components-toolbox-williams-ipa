@@ -10,12 +10,28 @@ export default class Poll extends Shadow() {
         if (this.shouldRenderCSS()) this.renderCSS()
         //Allow click through parent
         this.inputLists.forEach(element => this.addParentClickListener(element));
+
+        // Add a listener for each Button to highlight
+        this.inputLists.forEach(input => {
+            input.addEventListener("change", () => {
+                this.selectedAnswer = input.dataset.answerId;
+                this.updateHighlightAnswer(input.closest(".poll-answer"));
+            });
+        });
+
     }
 
     addParentClickListener(element) {
         element.addEventListener("click", () => {
             element.querySelector("input").click();
         });
+    }
+    
+    updateHighlightAnswer(answer) {
+        this.inputLists.forEach(answer => answer.classList.remove("highlight"));
+        if (answer) {
+            answer.classList.add("highlight")
+        }
     }
 
     shouldRenderCSS() {
@@ -58,8 +74,8 @@ export default class Poll extends Shadow() {
             border-radius: 3rem;
             cursor: pointer;
             align-items: center;
-            background-color: var(--submit-background-color, #c4390a);
-            border: 2px solid var(--submit-border-color, #c4390a);
+            background-color: var(--submit-background-color);
+            border: 2px solid var(--submit-border-color);
             border-radius: var(--submit-border-radius, 3rem);
             color: #fff;
             font-size: var(--submit-font-size, 1rem);
@@ -76,12 +92,12 @@ export default class Poll extends Shadow() {
 
         .poll-answer {
             cursor: pointer;
-            border-radius: var(--answer-border-radius, 0.4rem);
+            border-radius: var(--answer-border-radius);
             display: flex;
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            background-color: var(--answer-background-color, #f5f5f5);
+            background-color: var(--answer-background-color);
         }
 
         .poll-answer > label{
@@ -101,16 +117,16 @@ export default class Poll extends Shadow() {
         }
 
         .result:hover {
-            background-color: var(--poll-result-hover-background-color, #e0e0e0);
+            background-color: var(--result-hover-background-color);
         }
 
         .highlight {
-            background-color: var(--poll-highlight-background-color, #DDDDDD);
+            background-color: var(--highlight-background-color);
         }
 
 
         .poll-error-message{
-            color: var(--poll-error-message-color, red);
+            color: var(--error-message-color);
         }
 
         .poll-progress-bar{
@@ -118,7 +134,7 @@ export default class Poll extends Shadow() {
             top: 0;
             left: 0;
             height: 100%;
-            background-color: var(--poll-progress-bar-background-color, #F2B700);
+            background-color: var(--progress-bar-background-color);
             z-index: 0;
             opacity: 1;
             transition: opacity 1s ease;
@@ -130,8 +146,8 @@ export default class Poll extends Shadow() {
             width: 2rem; 
             height: 2rem; 
             min-width: 2rem;
-            background-color: var(--poll-radio-background-color, #DDDDDD);
-            border: 1px solid var(--poll-radio-border-color, #DDDDDD);
+            background-color: var(--radio-background-color);
+            border: 1px solid var(--radio-border-color);
             border-radius: 50%; 
             position: relative;
             cursor: pointer;
@@ -152,7 +168,7 @@ export default class Poll extends Shadow() {
         .poll-answer > input[type="radio"]:checked::after {
             width: 1rem; 
             height: 1rem;
-            background-color: var(--poll-radio-checked-background-color, #9B2700);
+            background-color: var(--radio-checked-background-color);
         }
         .poll-answer > input[type="radio"]:checked {
             background-color: white;
@@ -161,7 +177,7 @@ export default class Poll extends Shadow() {
         .poll-answer > input[type="radio"]:not(:checked)::after {
             width: 0;
             height: 0;
-            background-color: var(--poll-radio-unchecked-background-color, #9B2700);
+            background-color: var(--radio-unchecked-background-color);
             opacity: 0;
         }
 
