@@ -19,6 +19,12 @@ export default class Poll extends Shadow() {
                 this.updateHighlightAnswer(input.closest(".poll-answer"));
             });
         });
+        //Check if this poll is already solved and inside of the LocalStorage
+        const savedAnswerId = this.getSavedAnswerId(this.questionId);
+        if (savedAnswerId) {
+            this.selectedAnswer = savedAnswerId;
+            this.showSolvedResult();
+        }
     }
 
     async submitAnswer(event) {
@@ -27,30 +33,34 @@ export default class Poll extends Shadow() {
         if (this.checkedAnswer) {
             const answerId = this.checkedAnswer.dataset.answerId;
             this.selectedAnswer = answerId;
-            var answerData = { "pollId": this.pollId, "answerId": answerId }
-            await this.fetchEndpoint(answerData, this.postDestination, "POST")
+            var answerData = { "questionId": this.questionId, "answerId": answerId }
+            await this.fetchEndpoint(this.postDestination, "POST", answerData)
         }
         else {
-            console.error("No checked answer for PollID:", this.pollId);
+            console.error("No checked answer for questionId:", this.questionId);
             this.ErrorMessage.removeAttribute("hidden");
         }
     }
 
-    async fetchEndpoint(data, destination, method) {
+    async fetchEndpoint(destination, method, data) {
         try {
             this.hideForm()
             const response = await fetch(destination, {
                 method: method,
-                body: JSON.stringify(data),
+                body: data ? JSON.stringify(data) : null,
                 headers: { "Content-Type": "application/json" },
             });
             if (!response.ok) throw new Error("Network response was not ok");
-            const responseData = await response.json();
+            const responseData = await response.json(); this.showResult(responseData);
+
+            if (method === "POST") {
+                this.savePollResult(this.questionId);
+            }
             this.showResult(responseData);
         } catch (error) {
             this.ErrorMessage.removeAttribute("hidden");
             this.ErrorMessage.innerText = "There was an error submitting your answer, please try again later."
-            console.error("There was a problem with the fetch operation for PollID:", this.pollId, error);
+            console.error("There was a problem with the fetch operation for questionId:", this.questionId, error);
         }
     }
 
@@ -75,7 +85,7 @@ export default class Poll extends Shadow() {
     fillProgressBars(results) {
         results.forEach(result => {
             if (result.answerId != null && result.percentage != null) {
-                const percentage = Math.round(result.percentage * 100) ;
+                const percentage = Math.round(result.percentage * 100);
                 const parent = this.root.querySelector(`.result[data-answer-id="${result.answerId}"]`);
                 if (!parent) return;
                 const bar = parent.querySelector(".poll-progress-bar");
@@ -87,6 +97,33 @@ export default class Poll extends Shadow() {
                 });
             }
         });
+    }
+
+
+
+    savePollResult(questionId) {
+        let solvedPolls = JSON.parse(localStorage.getItem("solvedPolls")) || [];
+        solvedPolls = solvedPolls.filter(poll => poll.questionId !== questionId);
+
+        if (this.selectedAnswer) {
+            const data = {
+                questionId: questionId,
+                answerId: this.selectedAnswer
+            }
+            solvedPolls.push(data);
+            localStorage.setItem("solvedPolls", JSON.stringify(solvedPolls));
+        }
+    }
+
+    getSavedAnswerId(questionId) {
+        let solvedPolls = JSON.parse(localStorage.getItem("solvedPolls")) || [];
+        let solvedPoll = solvedPolls.find(poll => poll.questionId === questionId);
+        return solvedPoll ? solvedPoll.answerId : null;
+    }
+
+    showSolvedResult() {
+        const destination = `${this.getDestination}/${this.questionId}`;
+        this.fetchEndpoint(destination, "GET");
     }
 
     addParentClickListener(element) {
@@ -362,6 +399,10 @@ export default class Poll extends Shadow() {
         return this.dataset.postDestination
     }
 
+    get getDestination() {
+        return this.dataset.getDestination
+    }
+
     get checkedAnswer() {
         return this.root.querySelector(".poll-answer > input[type='radio']:checked")
     }
@@ -370,8 +411,8 @@ export default class Poll extends Shadow() {
         return this.root.querySelector(".poll-error-message")
     }
 
-    get pollId() {
-        return this.dataset.pollId
+    get questionId() {
+        return this.dataset.questionId
     }
 
     get pollAnswerLoader() {
