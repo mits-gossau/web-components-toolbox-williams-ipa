@@ -28,18 +28,19 @@ export default class Poll extends Shadow() {
             const answerId = this.checkedAnswer.dataset.answerId;
             this.selectedAnswer = answerId;
             var answerData = { "pollId": this.pollId, "answerId": answerId }
-            this.fetchEndpoint(answerData)
+            await this.fetchEndpoint(answerData, this.postDestination, "POST")
         }
         else {
+            console.error("No checked answer for PollID:", this.pollId);
             this.ErrorMessage.removeAttribute("hidden");
         }
     }
 
-    async fetchEndpoint(data) {
+    async fetchEndpoint(data, destination, method) {
         try {
             this.hideForm()
-            const response = await fetch(this.postDestination, {
-                method: "POST",
+            const response = await fetch(destination, {
+                method: method,
                 body: JSON.stringify(data),
                 headers: { "Content-Type": "application/json" },
             });
@@ -74,12 +75,11 @@ export default class Poll extends Shadow() {
     fillProgressBars(results) {
         results.forEach(result => {
             if (result.answerId != null && result.percentage != null) {
-                const percentage = result.percentage > 0 ? Math.round(result.percentage * 100) : "0";
+                const percentage = Math.round(result.percentage * 100) ;
                 const parent = this.root.querySelector(`.result[data-answer-id="${result.answerId}"]`);
                 if (!parent) return;
                 const bar = parent.querySelector(".poll-progress-bar");
                 const percentageResult = parent.querySelector(".poll-result-percentage");
-                if (!bar || !percentageResult) return;
                 bar.style.width = "0%";
                 percentageResult.textContent = percentage + "%";
                 requestAnimationFrame(() => {
@@ -124,10 +124,6 @@ export default class Poll extends Shadow() {
             gap: 1rem;
         }
 
-        form .submitting  {
-            opacity: 0;
-            pointer-events: none;
-        }
 
         .poll-heading{
             display: flex;
