@@ -122,8 +122,13 @@ export default class Poll extends Shadow() {
     }
 
     showSolvedResult() {
-        const destination = `${this.getDestination}/${this.questionId}`;
-        this.fetchEndpoint(destination, "GET");
+        if (this.getDestination) {
+            const destination = `${this.getDestination}/${this.questionId}`;
+            this.fetchEndpoint(destination, "GET");
+        }
+        else{
+            console.error("No destination set for showing solved results.");
+        }
     }
 
     addParentClickListener(element) {
