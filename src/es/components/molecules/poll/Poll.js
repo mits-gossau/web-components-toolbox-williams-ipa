@@ -165,15 +165,6 @@ export default class Poll extends Shadow() {
             align-items: flex-start;
             gap: 1rem;
         }
-
-
-        .poll-heading{
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            padding: 1rem 0rem;
-
-        }
         
         .poll-submit{
             appearance: none;

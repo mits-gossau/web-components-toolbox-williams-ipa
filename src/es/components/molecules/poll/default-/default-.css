@@ -1,4 +1,8 @@
-:host{
+:host {
+    --any-display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
     --poll-default-submit-background-color: var(--poll-default-submit-background-color-custom, #c4390a);
     --poll-default-submit-border-color: var(--poll-default-submit-border-color-custom, var(--poll-default-submit-background-color, #c4390a));
     --poll-default-submit-border-radius: var(--poll-default-submit-border-radius-custom, 3rem);
