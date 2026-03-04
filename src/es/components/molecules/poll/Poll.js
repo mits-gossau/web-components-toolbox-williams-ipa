@@ -51,7 +51,7 @@ export default class Poll extends Shadow() {
                 headers: { "Content-Type": "application/json" },
             });
             if (!response.ok) throw new Error("Network response was not ok");
-            const responseData = await response.json(); this.showResult(responseData);
+            const responseData = await response.json();
 
             if (method === "POST") {
                 this.savePollResult(this.questionId);
