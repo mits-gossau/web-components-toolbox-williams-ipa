@@ -72,7 +72,7 @@ export default class Poll extends Shadow() {
     showResult(data) {
         this.pollAnswerLoader.style.display = "none";
         this.pollResults.style.display = "flex";
-        this.pollAttenders.innerText = data.totalVotes;
+        if (this.pollParticipants) this.pollParticipants.innerText = data.totalVotes;
         this.fillProgressBars(data.answers);
 
         // Highlight the selected answer in results
@@ -285,7 +285,7 @@ export default class Poll extends Shadow() {
             opacity: 1;
         }  
         
-        .poll-answer-text{
+        .poll-answer-text, .poll-result-percentage{
             position: static;
             z-index: 2;
         }
@@ -418,8 +418,8 @@ export default class Poll extends Shadow() {
     get pollResults() {
         return this.root.querySelector(".results")
     }
-    get pollAttenders() {
-        return this.root.querySelector(".poll-result-attenders")
+    get pollParticipants() {
+        return this.root.querySelector(".poll-result-participants")
     }
 
 }
