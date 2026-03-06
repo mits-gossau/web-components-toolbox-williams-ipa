@@ -189,6 +189,7 @@ export default class Poll extends Shadow() {
         }
 
         .poll-answer {
+            color: var(--answer-color);
             cursor: pointer;
             border-radius: var(--answer-border-radius);
             display: flex;

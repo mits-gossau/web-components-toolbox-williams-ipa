@@ -60,7 +60,8 @@
   --poll-default-highlighted-color-custom: #DDDDDD;
   --poll-default-submit-background-color-custom: #c4390a;
   --poll-default-percentage-bar-background-color-custom: #f2b700;
-
+  --poll-default-answer-color-custom: #3C3C3C;
+  
   /* Fonts */
   --font-family: HelveticaNowDisplay, Helvetica, Arial, sans-serif;
   --p-font-family: HelveticaNowText, Helvetica, Arial, sans-serif;

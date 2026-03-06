@@ -7,6 +7,7 @@
     --poll-default-submit-border-color: var(--poll-default-submit-border-color-custom, var(--poll-default-submit-background-color, #c4390a));
     --poll-default-submit-border-radius: var(--poll-default-submit-border-radius-custom, 3rem);
     --poll-default-submit-font-size: var(--poll-default-submit-font-size-custom, 1rem);
+    --poll-default-answer-color: var(--poll-default-answer-color-custom, #3C3C3C);
 
     --poll-default-ul-display: var(--poll-default-ul-display-custom, flex);
     --poll-default-ul-padding-left: var(--poll-default-ul-padding-left-custom, 0rem);
