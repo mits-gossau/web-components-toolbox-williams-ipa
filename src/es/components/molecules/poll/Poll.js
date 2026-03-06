@@ -27,6 +27,7 @@ export default class Poll extends Shadow() {
         }
     }
 
+    // Validates and submits the selected answer to the fetchEndpoint function.
     async submitAnswer(event) {
         event.preventDefault();
         this.ErrorMessage.setAttribute("hidden", true);
@@ -42,6 +43,7 @@ export default class Poll extends Shadow() {
         }
     }
 
+    // Handles API calls for submit (POST) and solved-state loading (GET).
     async fetchEndpoint(destination, method, data) {
         try {
             this.hideForm()
@@ -64,11 +66,13 @@ export default class Poll extends Shadow() {
         }
     }
 
+    // Hides the form and displays the loading state.
     hideForm() {
         this.form.classList.add("disappearing");
         this.pollAnswerLoader.style.display = "flex";
     }
 
+    // Displays aggregated results and keeps the selected answer visually highlighted.
     showResult(data) {
         this.pollAnswerLoader.style.display = "none";
         this.pollResults.style.display = "flex";
@@ -82,6 +86,7 @@ export default class Poll extends Shadow() {
         }
     }
 
+    // Maps API percentages to the matching result bars and animates their width.
     fillProgressBars(results) {
         results.forEach(result => {
             if (result.answerId != null && result.percentage != null) {
@@ -101,6 +106,7 @@ export default class Poll extends Shadow() {
 
 
 
+    // Persists the current question + selected answer in localStorage.
     savePollResult(questionId) {
         let solvedPolls = JSON.parse(localStorage.getItem("solvedPolls")) || [];
         solvedPolls = solvedPolls.filter(poll => poll.questionId !== questionId);
@@ -115,12 +121,14 @@ export default class Poll extends Shadow() {
         }
     }
 
+    // Returns a saved answer id for the given question, or null if not found.
     getSavedAnswerId(questionId) {
         let solvedPolls = JSON.parse(localStorage.getItem("solvedPolls")) || [];
         let solvedPoll = solvedPolls.find(poll => poll.questionId === questionId);
         return solvedPoll ? solvedPoll.answerId : null;
     }
 
+    // Loads and displays results when this poll was already solved earlier.
     showSolvedResult() {
         if (this.getDestination) {
             const destination = `${this.getDestination}/${this.questionId}`;
@@ -131,6 +139,7 @@ export default class Poll extends Shadow() {
         }
     }
 
+    // Allows clicking the full answer row instead of only the radio input.
     addParentClickListener(element) {
         element.addEventListener("click", () => {
             const input = element.querySelector("input");
@@ -138,6 +147,7 @@ export default class Poll extends Shadow() {
         });
     }
 
+    // Clears old highlights and applies highlight to the active answer element.
     updateHighlightAnswer(answer) {
         this.inputLists.forEach(answer => answer.classList.remove("highlight"));
         if (answer) {
