@@ -90,7 +90,7 @@ export default class Poll extends Shadow() {
     fillProgressBars(results) {
         results.forEach(result => {
             if (result.answerId != null && result.percentage != null) {
-                const percentage = Math.round(result.percentage * 100);
+                const percentage = result.percentage;
                 const parent = this.root.querySelector(`.result[data-answer-id="${result.answerId}"]`);
                 if (!parent) return;
                 const bar = parent.querySelector(".poll-progress-bar");
